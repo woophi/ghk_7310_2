@@ -53,12 +53,6 @@ const newText = style({
   color: '#2A77EF',
 });
 
-const tagsRow = style({
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: '8px',
-});
-
 const articleImgWrap = style({
   position: 'absolute',
   right: 0,
@@ -74,6 +68,25 @@ const articleImg = style({
   margin: '-16px 0',
 });
 
+const grid = style({
+  display: 'grid',
+  gridTemplateColumns: '162px 162px',
+  width: '100%',
+  gap: '12px',
+});
+
+const gridItem = style({
+  backgroundColor: '#F3F4F5',
+  padding: '4px 4px 12px',
+  borderRadius: '24px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+  alignItems: 'center',
+  textAlign: 'center',
+  maxWidth: '162px',
+});
+
 export const appSt = {
   container,
   section,
@@ -85,5 +98,6 @@ export const appSt = {
   newText,
   articleImgWrap,
   articleImg,
-  tagsRow,
+  grid,
+  gridItem,
 };
