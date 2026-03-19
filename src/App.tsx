@@ -11,13 +11,6 @@ import { LS, LSKeys } from './ls';
 import { appSt } from './style.css';
 import { formatWord } from './utils/words';
 
-const categoryToIndex: Record<string, number> = {
-  Образовательный: 1,
-  Игры: 2,
-  Сторител: 3,
-  Прочее: 4,
-};
-
 export const App = () => {
   const { articlesData } = useArticlesData();
   const [view, setView] = useState<'list' | 'grid'>('grid');
@@ -36,6 +29,15 @@ export const App = () => {
   }, {});
 
   const visibleGrouped = activeCategory ? { [activeCategory]: grouped[activeCategory] ?? [] } : grouped;
+
+  const onClickArticle = (link: string, title: string) => {
+    window.gtag('event', '7442_longread_click', {
+      var: 'var2',
+      section: `${activeCategory || 'Все рубрики'}`,
+      longread: title,
+    });
+    window.location.replace(link);
+  };
 
   if (view === 'list') {
     return (
@@ -61,14 +63,7 @@ export const App = () => {
                 key={idx}
                 href={article.link}
                 className={appSt.articleCard}
-                onClick={() => {
-                  window.gtag('event', '7442_longread_click', {
-                    var: 'var1',
-                    section: `s${activeCategory ? categoryToIndex[activeCategory] : 4}`,
-                    longread: `s${activeCategory ? categoryToIndex[activeCategory] : 4}_l${idx + 1}`,
-                  });
-                  window.location.replace(article.link);
-                }}
+                onClick={() => onClickArticle(article.link, article.title)}
               >
                 <PureCell.Content>
                   <PureCell.Main>
@@ -104,7 +99,7 @@ export const App = () => {
         <div
           className={appSt.gridItem}
           onClick={() => {
-            window.gtag('event', '7442_section_click', { var: 'var2', section: 's1' });
+            window.gtag('event', '7442_section_click', { var: 'var2', section: 'Образовательный' });
             setView('list');
             setActiveCategory('Образовательный');
           }}
@@ -117,7 +112,7 @@ export const App = () => {
         <div
           className={appSt.gridItem}
           onClick={() => {
-            window.gtag('event', '7442_section_click', { var: 'var2', section: 's2' });
+            window.gtag('event', '7442_section_click', { var: 'var2', section: 'Игры' });
             setView('list');
             setActiveCategory('Игры');
           }}
@@ -130,7 +125,7 @@ export const App = () => {
         <div
           className={appSt.gridItem}
           onClick={() => {
-            window.gtag('event', '7442_section_click', { var: 'var2', section: 's3' });
+            window.gtag('event', '7442_section_click', { var: 'var2', section: 'Сторител' });
             setView('list');
             setActiveCategory('Сторител');
           }}
@@ -143,7 +138,7 @@ export const App = () => {
         <div
           className={appSt.gridItem}
           onClick={() => {
-            window.gtag('event', '7442_section_click', { var: 'var2', section: 's4' });
+            window.gtag('event', '7442_section_click', { var: 'var2', section: 'Все рубрики' });
             setView('list');
             setActiveCategory(null);
           }}

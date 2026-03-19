@@ -8,31 +8,24 @@ declare global {
 }
 
 type Payload = {
-  autopayments: 1 | 0;
-  limit: 1 | 0;
-  limit_sum: number;
-  insurance: 1 | 0;
-  email: 1 | 0;
+  longread: string;
 };
 
 export const sendDataToGA = async (payload: Payload) => {
   try {
     const now = new Date();
-    const date = `${now.getFullYear()}-${
+    const datetime = `${now.getFullYear()}-${
       now.getMonth() + 1
     }-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
 
-    await fetch(
-      'https://script.google.com/macros/s/AKfycbxcHgrbrpJDGqapkLM5baYBX40Q4CotD5cxxU-4_mdpm86bxbBXSESz1AkW_G-ubZWb/exec',
-      {
-        redirect: 'follow',
-        method: 'POST',
-        body: JSON.stringify({ date, ...payload, variant: 'variant2', id: LS.getItem(LSKeys.UserId, 0) }),
-        headers: {
-          'Content-Type': 'text/plain;charset=utf-8',
-        },
+    await fetch('https://script.google.com/macros/s/1jdX0hy-RwvVVLdFE0G4zN5jUc8RKYPQvjA75fXOvxD7dfv2zIhzhA1iq/exec', {
+      redirect: 'follow',
+      method: 'POST',
+      body: JSON.stringify({ datetime, ...payload, var: '7442_2', user_id: LS.getItem(LSKeys.UserId, 0) }),
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8',
       },
-    );
+    });
   } catch (error) {
     console.error('Error!', error);
   }
