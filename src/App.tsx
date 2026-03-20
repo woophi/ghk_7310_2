@@ -28,6 +28,9 @@ export const App = () => {
     return acc;
   }, {});
 
+  const categories = Object.keys(grouped);
+  const categoryImages = [obrazImg, playImg, readImg];
+
   const visibleGrouped = activeCategory ? { [activeCategory]: grouped[activeCategory] ?? [] } : grouped;
 
   const onClickArticle = (link: string, title: string) => {
@@ -96,45 +99,23 @@ export const App = () => {
       </Typography.TitleResponsive>
 
       <div className={appSt.grid}>
-        <div
-          className={appSt.gridItem}
-          onClick={() => {
-            window.gtag('event', '7442_section_click', { var: 'var2', section: 'Образовательный' });
-            setView('list');
-            setActiveCategory('Образовательный');
-          }}
-        >
-          <img src={obrazImg} width={154} height={140} />
-          <Typography.Text view="primary-medium" weight="medium">
-            Образовательный
-          </Typography.Text>
-        </div>
-        <div
-          className={appSt.gridItem}
-          onClick={() => {
-            window.gtag('event', '7442_section_click', { var: 'var2', section: 'Игры' });
-            setView('list');
-            setActiveCategory('Игры');
-          }}
-        >
-          <img src={playImg} width={154} height={140} />
-          <Typography.Text view="primary-medium" weight="medium">
-            Игры
-          </Typography.Text>
-        </div>
-        <div
-          className={appSt.gridItem}
-          onClick={() => {
-            window.gtag('event', '7442_section_click', { var: 'var2', section: 'Сторител' });
-            setView('list');
-            setActiveCategory('Сторител');
-          }}
-        >
-          <img src={readImg} width={154} height={140} />
-          <Typography.Text view="primary-medium" weight="medium">
-            Сторител
-          </Typography.Text>
-        </div>
+        {categories.map((category, idx) => (
+          <div
+            key={category}
+            className={appSt.gridItem}
+            onClick={() => {
+              window.gtag('event', '7442_section_click', { var: 'var2', section: category });
+              setView('list');
+              setActiveCategory(category);
+            }}
+          >
+            <img src={categoryImages[idx % categoryImages.length]} width={154} height={140} />
+            <Typography.Text view="primary-medium" weight="medium">
+              {category}
+            </Typography.Text>
+          </div>
+        ))}
+
         <div
           className={appSt.gridItem}
           onClick={() => {
